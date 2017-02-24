@@ -1,0 +1,3 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<materialx version="1.33" require="multilayer,matopgraph" cms="ocio" colorspace="scene" texturecolorspace="srgb_texture">
+</materialx>
