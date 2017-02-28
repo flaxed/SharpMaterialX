@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<materialx require="matopgraph">
+    <opgraph name="shaderparams">
+        <constant name="steel_diffc" type="color3">
+            <parameter name="value" type="color3" value="0.0318, 0.0318, 0.0318"/>
+        </constant>
+        <constant name="steel_specc" type="color3">
+            <parameter name="value" type="color3" value="0.476, 0.476, 0.476"/>
+        </constant>
+        <constant name="steel_roughf" type="float">
+            <parameter name="value" type="float" value="0.05"/>
+        </constant>
+        <image name="rust_diffc" type="color3">
+            <parameter name="file" type="filename" value="rust_diffc.tif"/>
+        </image>
+        <constant name="rust_specc" type="color3">
+            <parameter name="value" type="color3" value="0.043, 0.043, 0.043"/>
+        </constant>
+        <constant name="rust_roughf" type="float">
+            <parameter name="value" type="float" value="0.5"/>
+        </constant>
+        <constant name="paint_diffc" type="color3">
+            <parameter name="value" type="color3" value="0.447, 0.447, 0.447"/>
+        </constant>
+        <constant name="paint_specc" type="color3">
+            <parameter name="value" type="color3" value="0.144, 0.144, 0.144"/>
+        </constant>
+        <constant name="paint_roughf" type="float">
+            <parameter name="value" type="float" value="0.137"/>
+        </constant>
+        <image name="mask_rust" type="float">
+            <parameter name="file" type="filename" value="mask_rust.tif"/>
+        </image>
+        <image name="mask_paint" type="float">
+            <parameter name="file" type="filename" value="mask_paint.tif"/>
+        </image>
+        <mix name="mix_diff1" type="color3">
+            <parameter name="fg" type="opgraphnode" value="rust_diffc"/>
+            <parameter name="bg" type="opgraphnode" value="steel_diffc"/>
+            <parameter name="mask" type="opgraphnode" value="mask_rust"/>
+        </mix>
+        <mix name="mix_diff2" type="color3">
+            <parameter name="fg" type="opgraphnode" value="paint_diffc"/>
+            <parameter name="bg" type="opgraphnode" value="mix_diff1"/>
+            <parameter name="mask" type="opgraphnode" value="mask_paint"/>
+        </mix>
+        <output name="o_diffcolor" type="color3">
+            <parameter name="in" type="opgraphnode" value="mix_diff2"/>
+        </output>
+        <mix name="mix_spec1" type="color3">
+            <parameter name="fg" type="opgraphnode" value="rust_specc"/>
+            <parameter name="bg" type="opgraphnode" value="steel_specc"/>
+            <parameter name="mask" type="opgraphnode" value="mask_rust"/>
+        </mix>
+        <mix name="mix_spec2" type="color3">
+            <parameter name="fg" type="opgraphnode" value="paint_specc"/>
+            <parameter name="bg" type="opgraphnode" value="mix_spec1"/>
+            <parameter name="mask" type="opgraphnode" value="mask_paint"/>
+        </mix>
+        <output name="o_speccolor" type="color3">
+            <parameter name="in" type="opgraphnode" value="mix_spec2"/>
+        </output>
+        <mix name="mix_rough1" type="float">
+            <parameter name="fg" type="opgraphnode" value="rust_roughf"/>
+            <parameter name="bg" type="opgraphnode" value="steel_roughf"/>
+            <parameter name="mask" type="opgraphnode" value="mask_rust"/>
+        </mix>
+        <mix name="mix_rough2" type="float">
+            <parameter name="fg" type="opgraphnode" value="paint_roughf"/>
+            <parameter name="bg" type="opgraphnode" value="mix_rough1"/>
+            <parameter name="mask" type="opgraphnode" value="mask_paint"/>
+        </mix>
+        <output name="o_roughness" type="float">
+            <parameter name="in" type="opgraphnode" value="mix_rough2"/>
+        </output>
+    </opgraph>
+    <shader name="rman_srf3" shadertype="surface" application="rman" shaderprogram="basic_srf">
+        <input name="diff_albedo" type="color3" opgraph="shaderparams" graphoutput="o_diffcolor"/>
+        <input name="spec_color" type="color3" opgraph="shaderparams" graphoutput="o_speccolor"/>
+        <input name="roughness" type="float" opgraph="shaderparams" graphoutput="o_roughness"/>
+    </shader>
+    <shader name="vray_srf3" shadertype="surface" application="vray" shaderprogram="basic_surface">
+        <input name="albedo" type="color3" opgraph="shaderparams" graphoutput="o_diffcolor"/>
+        <input name="speccolor" type="color3" opgraph="shaderparams" graphoutput="o_speccolor"/>
+        <input name="roughness" type="float" opgraph="shaderparams" graphoutput="o_roughness"/>
+        <parameter name="fresnel" type="float" value="0.25"/>
+    </shader>
+    <material name="blendedmtl">
+        <shaderref name="rman_srf3"/>
+        <shaderref name="vray_srf3"/>
+    </material>
+</materialx>

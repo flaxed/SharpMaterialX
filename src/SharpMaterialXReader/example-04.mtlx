@@ -1,0 +1,10 @@
+<shader name="blendsrf3" shadertype="surface" shaderprogram="threelayer_surface">
+    <coshader name="layer1" shader="steel" aovset="standard"/>
+    <coshader name="layer2" shader="plastic" aovset="standard"/>
+    <coshader name="layer3" shader="glass" aovset="standard"/>
+    <input name="blend1_2" type="float" opgraph="shadermaps" graphoutput="o_mask_plastic"/>
+    <input name="blend12_3" type="float" opgraph="shadermaps" graphoutput="o_mask_glass"/>
+</shader>
+<material name="userblendmat">
+    <shaderref name="blendsrf3"/>
+</material> 

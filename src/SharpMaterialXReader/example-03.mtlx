@@ -1,0 +1,61 @@
+<materialx require="matopgraph,matshadergraph">
+    <opgraph name="shadermaps">
+        <image name="plastic_diffc" type="color3">
+            <parameter name="file" type="filename" value="plastic_diffc.tif"/>
+        </image>
+        <output name="o_plastic_diff" type="color3">
+            <parameter name="in" type="opgraphnode" value="plastic_diffc"/>
+        </output>
+        <image name="mask_plastic" type="float">
+            <parameter name="file" type="filename" value="mask_plastic.tif"/>
+        </image>
+        <output name="o_mask_plastic" type="float">
+            <parameter name="in" type="opgraphnode" value="mask_plastic"/>
+        </output>
+        <image name="mask_glass" type="float">
+            <parameter name="file" type="filename" value="mask_glass.tif"/>
+        </image>
+        <output name="o_mask_glass" type="float">
+            <parameter name="in" type="opgraphnode" value="mask_glass"/>
+        </output>
+    </opgraph>
+    <aovset name="standard">
+        <aov name="Color" type="color3"/>
+        <aov name="Opacity" type="float"/>
+        <aov name="diffuse" type="color3"/>
+        <aov name="specular" type="color3"/>
+        <aov name="Pworld" type="vector3"/>
+    </aovset>
+    <shader name="steel" shadertype="surface" shaderprogram="basic_surface" aovset="standard">
+        <input name="diff_albedo" type="color3" value="0.0318, 0.0318, 0.0318"/>
+        <input name="spec_color" type="color3" value="0.476, 0.476, 0.476"/>
+        <input name="roughness" type="float" value="0.05"/>
+        <parameter name="fresnel_expon" type="float" value="0.25"/>
+    </shader>
+    <shader name="plastic" shadertype="surface" shaderprogram="basic_surface" aovset="standard">
+        <input name="diff_albedo" type="color3" opgraph="shadermaps" graphoutput="o_plastic_diff"/>
+        <input name="spec_color" type="color3" value="0.35, 0.35, 0.35"/>
+        <input name="roughness" type="float" value="0.38"/>
+        <parameter name="fresnel_expon" type="float" value="0.3"/>
+    </shader>
+    <shader name="glass" shadertype="surface" shaderprogram="basic_surface" aovset="standard">
+        <input name="diff_albedo" type="color3" value="0.001, 0.001, 0.001"/>
+        <input name="spec_color" type="color3" value="0.6, 0.6, 0.6"/>
+        <input name="roughness" type="float" value="0.01"/>
+        <input name="opacity" type="float" value="0.002"/>
+        <parameter name="fresnel_expon" type="float" value="0.2"/>
+    </shader>
+    <shader name="blendsrf1" shadertype="surface" shaderprogram="mx_mix" aovs="Color,Opacity,diffuse,specular" passaovs="Pworld">
+        <coshader name="bg" shader="steel"/>
+        <coshader name="fg" shader="plastic"/>
+        <input name="amount" type="float" opgraph="shadermaps" graphoutput="o_mask_plastic"/>
+    </shader>
+    <shader name="blendsrf2" shadertype="surface" shaderprogram="mx_mix" aovs="Color,Opacity,diffuse,specular" passaovs="Pworld">
+        <coshader name="bg" shader="blendsrf1"/>
+        <coshader name="fg" shader="glass"/>
+        <input name="amount" type="float" opgraph="shadermaps" graphoutput="o_mask_glass"/>
+    </shader>
+    <material name="layeredmat">
+        <shaderref name="blendsrf2"/>
+    </material>
+</materialx> 
