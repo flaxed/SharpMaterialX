@@ -1,3 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<materialx version="1.33" require="multilayer,matopgraph" cms="ocio" colorspace="scene" texturecolorspace="srgb_texture">
+<materialx version="1.33" require="multilayer, matopgraph" cms="ocio" colorspace="scene" texturecolorspace="srgb_texture">
+  <!-- SHADERS -->
+
+  <shader name="surface" shadertype="surface" shaderprogram="default_surface">
+    <parameter name="testparam" type="color2" value="1.0, 2" default="0,0" publicname="test" />
+    <parameter name="bump_scale" type="float" default="0.02"/>
+    <parameter name="bump_ampl" type="float" default="0.015"/>
+    <input name="diff_albedo" type="color3" opgraph="opgraph3" graphoutput="albedo"/>
+    <input name="spec_color" type="color3"/>
+    <input name="roughness" type="float"/>
+    <coshader name="bg" shader="blendsrf1"/>
+    <coshader name="fg" shader="glass"/>
+    <aov name="diffuse" type="color3" />
+  </shader>
+
+  <!-- IMPLEMENTATIONS -->
+
+  <implementation name="vs-shader" shader="vs-shader" application="loquat" file="shaders/vertex-shader.hlsl" function="main" language="hlsl"/>
+
+  <implementation name="ps-shader" shader="ps-shader" application="loquat" file="shaders/pixel-shader.hlsl" function="main" language="hlsl"/>
+
 </materialx>

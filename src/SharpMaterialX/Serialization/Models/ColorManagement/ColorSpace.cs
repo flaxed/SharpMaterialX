@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SharpMaterialX.ColorManagement
+namespace SharpMaterialX.Serialization.Models.ColorManagement
 {
     public class ColorSpace
     {

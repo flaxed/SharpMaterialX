@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace SharpMaterialX
+namespace SharpMaterialX.Serialization.Models
 {
     public class RequireCollection
     {

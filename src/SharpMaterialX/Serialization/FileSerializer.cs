@@ -3,7 +3,7 @@ using System.IO;
 
 namespace SharpMaterialX.Serialization
 {
-    public class FileSerializer
+    public static class FileSerializer
     {
         public static DeserializationResult Deserialize(string path)
         {

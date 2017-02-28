@@ -1,17 +1,17 @@
 using System;
 using System.Xml.Linq;
 
-using SharpMaterialX.ColorManagement;
+using SharpMaterialX.Serialization.Models.ColorManagement;
 
-namespace SharpMaterialX.Serialization
+namespace SharpMaterialX.Serialization.Headers
 {
     internal static class ColorManagementSerializer
     {
-        public static bool TryReadColorConfiguration(XElement root, Header header)
+        public static bool TryReadColorConfiguration(DocumentDeserializationContext context, XElement root)
         {
-            bool hasCms = TryReadCms(root, out string cms);
+            bool hasCms = TryReadCms(out string cms, root);
 
-            bool hasCmsConfig = TryReadCmsConfig(root, out var cmsConfig);
+            bool hasCmsConfig = TryReadCmsConfig(out var cmsConfig, root);
 
             ColorManagementConfiguration colorManagementConfiguration;
 
@@ -38,18 +38,18 @@ namespace SharpMaterialX.Serialization
                 }
             }
 
-            header.ColorManagementConfiguration = colorManagementConfiguration;
+            context.Header.ColorManagementConfiguration = colorManagementConfiguration;
 
             return true;
         }
 
-        private static bool TryReadCms(XElement root, out string cms)
+        private static bool TryReadCms(out string cms, XElement root)
         {
             cms = root.Attribute("cms")?.Value;
             return string.IsNullOrWhiteSpace(cms) == false;
         }
 
-        private static bool TryReadCmsConfig(XElement root, out Uri cmsConfig)
+        private static bool TryReadCmsConfig(out Uri cmsConfig, XElement root)
         {
             var cmsPath = root.Attribute("cmsconfig")?.Value;
 

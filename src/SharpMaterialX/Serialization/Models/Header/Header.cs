@@ -1,6 +1,6 @@
-﻿using SharpMaterialX.ColorManagement;
+﻿using SharpMaterialX.Serialization.Models.ColorManagement;
 
-namespace SharpMaterialX
+namespace SharpMaterialX.Serialization.Models.Headers
 {
     public class Header
     {
@@ -13,11 +13,5 @@ namespace SharpMaterialX
         public ColorSpace ColorSpace { get; set; }
 
         public VDirection VDirection { get; set; }
-    }
-
-    public enum VDirection
-    {
-        Up,
-        Down
     }
 }

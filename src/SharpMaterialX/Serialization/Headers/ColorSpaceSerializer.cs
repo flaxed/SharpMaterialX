@@ -1,16 +1,18 @@
 using System.Xml.Linq;
 
-using SharpMaterialX.ColorManagement;
+using SharpMaterialX.Serialization.Models.ColorManagement;
 
-namespace SharpMaterialX.Serialization
+namespace SharpMaterialX.Serialization.Headers
 {
     internal static class ColorSpaceSerializer
     {
-        public static bool TryReadColorSpace(XElement root, out ColorSpace colorSpace)
+        public static bool TryReadColorSpace(XElement root, DocumentDeserializationContext context)
         {
             bool hasColorSpace = TryReadColorSpace(root, out string colorString);
 
             bool hasTextureColorSpace = TryReadTextureColorSpace(root, out string textureString);
+
+            ColorSpace colorSpace = null;
 
             if (hasColorSpace)
             {
@@ -29,14 +31,10 @@ namespace SharpMaterialX.Serialization
                 if (hasTextureColorSpace)
                 {
                     colorSpace = ColorSpace.CreateWithTextureColorSpace(textureString);
-
-                }
-                else
-                {
-                    colorSpace = null;
-                    return false;
                 }
             }
+
+            context.Header.ColorSpace = colorSpace;
 
             return true;
         }

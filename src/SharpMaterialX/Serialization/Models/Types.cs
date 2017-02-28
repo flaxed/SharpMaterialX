@@ -1,0 +1,31 @@
+﻿namespace SharpMaterialX.Serialization.Models
+{
+    public enum Types
+    {
+        Unknown,
+        Integer,
+        Boolean,
+        Float,
+        Color2,
+        Color3,
+        Color4,
+        Vector2,
+        Vector3,
+        Vector4,
+        Matrix,
+        String,
+        Filename,
+        OpGraphNode,
+        OpGraphName,
+        ShaderNode,
+        IntegerArray,
+        FloatArray,
+        Color2Array,
+        Color3Array,
+        Color4Array,
+        Vector2Array,
+        Vector3Array,
+        Vector4Array,
+        StringArray
+    }
+}

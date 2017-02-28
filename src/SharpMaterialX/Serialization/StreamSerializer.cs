@@ -4,7 +4,7 @@ using System.Xml.Linq;
 
 namespace SharpMaterialX.Serialization
 {
-    public class StreamSerializer
+    public static class StreamSerializer
     {
         public static DeserializationResult Deserialize(Stream stream)
         {
@@ -12,7 +12,7 @@ namespace SharpMaterialX.Serialization
             {
                 var document = XDocument.Load(stream);
 
-                return DocumentSerializer.Deserialize(document);
+                return DocumentDeserializer.Deserialize(document);
             }
             catch (Exception e)
             {

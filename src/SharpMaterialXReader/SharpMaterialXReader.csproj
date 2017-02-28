@@ -7,6 +7,9 @@
     <ProjectReference Include="..\SharpMaterialX\SharpMaterialX.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <None Update="test-material.mtlx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="testmaterial.mtlx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

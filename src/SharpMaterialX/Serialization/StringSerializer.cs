@@ -3,7 +3,7 @@ using System.Xml.Linq;
 
 namespace SharpMaterialX.Serialization
 {
-    public class StringSerializer
+    public static class StringSerializer
     {
         public static DeserializationResult Deserialize(string content)
         {
@@ -11,7 +11,7 @@ namespace SharpMaterialX.Serialization
             {
                 var document = XDocument.Parse(content);
 
-                return DocumentSerializer.Deserialize(document);
+                return DocumentDeserializer.Deserialize(document);
             }
             catch (Exception e)
             {

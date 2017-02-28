@@ -1,5 +1,7 @@
 using System;
 
+using SharpMaterialX.Serialization.Models;
+
 namespace SharpMaterialX.Serialization
 {
     public class DeserializationResult

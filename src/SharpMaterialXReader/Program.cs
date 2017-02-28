@@ -12,7 +12,7 @@ namespace SharpMaterialXReader
                 "<materialx require=\"\">\r\n" +
                 "</materialx>";
 
-            var result = StringSerializer.Deserialize(headerString);
+            var result = FileSerializer.Deserialize("test-material.mtlx");
 
             Console.WriteLine($"Deserialization was {(result.IsSuccessful ? "Successful" : "Not Successful")}");
             Console.ReadLine();

@@ -1,6 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-using SharpMaterialX;
+using SharpMaterialX.Serialization.Models;
 
 using SharpMaterialXTests.Deserialization.Utils;
 

@@ -1,4 +1,4 @@
-﻿namespace SharpMaterialX
+﻿namespace SharpMaterialX.Serialization.Models
 {
     public class Version
     {
