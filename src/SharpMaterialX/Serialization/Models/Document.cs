@@ -2,13 +2,13 @@
 
 namespace SharpMaterialX.Serialization.Models
 {
-    public class MaterialXDocument
+    public class Document
     {
         public Header Header { get; set; }
 
-        internal static MaterialXDocument Create(DocumentDeserializationContext context)
+        internal static Document Create(DocumentDeserializationContext context)
         {
-            return new MaterialXDocument
+            return new Document
             {
                 Header = context.Header
             };

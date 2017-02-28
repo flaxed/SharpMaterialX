@@ -1,6 +1,7 @@
 using System.Xml.Linq;
 
 using SharpMaterialX.Serialization.Headers;
+using SharpMaterialX.Serialization.Materials;
 using SharpMaterialX.Serialization.Models;
 using SharpMaterialX.Serialization.Shaders;
 
@@ -26,15 +27,25 @@ namespace SharpMaterialX.Serialization
 
             if (ShaderElementsSerializer.ReadElements(context, root) == false)
             {
-                return DeserializationResult.CreateFailure("Failed to read material header");
+                return DeserializationResult.CreateFailure("Failed to read shader elements");
             }
 
             if (ShaderImplementationElementsSerializer.ReadElements(context, root) == false)
             {
-                return DeserializationResult.CreateFailure("Failed to read material header");
+                return DeserializationResult.CreateFailure("Failed to read implementation elements");
             }
 
-            var materialDocument = MaterialXDocument.Create(context);
+            if (MaterialElementsSerializer.ReadElements(context, root) == false)
+            {
+                return DeserializationResult.CreateFailure("Failed to read material elements");
+            }
+
+            if (MaterialVarDefaultElementsSerializer.ReadElements(context, root) == false)
+            {
+                return DeserializationResult.CreateFailure("Failed to read material elements");
+            }
+
+            var materialDocument = Document.Create(context);
 
             return DeserializationResult.FromDocument(materialDocument);
         }

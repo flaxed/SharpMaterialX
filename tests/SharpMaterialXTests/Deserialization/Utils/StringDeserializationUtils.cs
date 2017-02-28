@@ -7,7 +7,7 @@ namespace SharpMaterialXTests.Deserialization.Utils
 {
     internal static class StringDeserializationUtils
     {
-        public static MaterialXDocument DeserializeString(string contentString)
+        public static Document DeserializeString(string contentString)
         {
             var result = StringSerializer.Deserialize(contentString);
 

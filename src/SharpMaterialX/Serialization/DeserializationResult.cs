@@ -13,14 +13,14 @@ namespace SharpMaterialX.Serialization
             this.HasErrors = true;
         }
 
-        private DeserializationResult(MaterialXDocument document)
+        private DeserializationResult(Document document)
         {
             this.Document = document;
             this.IsSuccessful = true;
             this.HasErrors = false;
         }
 
-        public MaterialXDocument Document { get; }
+        public Document Document { get; }
 
         public string ErrorMessage { get; }
 
@@ -28,7 +28,7 @@ namespace SharpMaterialX.Serialization
 
         public bool HasErrors { get; }
 
-        public static DeserializationResult FromDocument(MaterialXDocument document)
+        public static DeserializationResult FromDocument(Document document)
         {
             return new DeserializationResult(document);
         }

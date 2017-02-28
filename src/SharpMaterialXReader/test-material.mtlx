@@ -20,4 +20,31 @@
 
   <implementation name="ps-shader" shader="ps-shader" application="loquat" file="shaders/pixel-shader.hlsl" function="main" language="hlsl"/>
 
+  <!-- MATERIALS -->
+
+  <material name="material1">
+    <shaderref name="srf1">
+      <bindinput name="spec_color" type="color3" value="1.0, 0.99, 0.95"/>
+      <bindinput name="roughness" type="float" value="0.15"/>
+      <bindparam name="fresnel_exp" type="float" value="0.2"/>
+    </shaderref>
+    <shaderref name="dsp1">
+      <bindparam name="bump_ampl" type="float" value="0.0125"/>
+    </shaderref>
+    <override name="diffcolor" type="color3" value="0.25, 0.24, 0.16"/>
+    <override name="dirt_contrast" type="float" value="0.33"/>
+    <override name="grain:gain" type="float" value="0.1"/>
+    <override name="grain:size" type="float" value="0.008"/>
+  </material>
+  <material name="material2">
+    <shaderref name="srf1">
+      <bindinput name="spec_color" type="color3" value="1,1,1"/>
+      <bindinput name="roughness" type="float" value="0.1"/>
+      <bindparam name="fresnel_exp" type="float" value="0.3"/>
+    </shaderref>
+    <override name="dirt_contrast" type="float" value="0.31"/>
+    <override name="grain:gain" type="float" value="0.075"/>
+    <override name="grain:size" type="float" value="0.008"/>
+  </material>
+
 </materialx>
